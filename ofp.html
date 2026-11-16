@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ОФП (TL Kids): точки роста</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3F4EF; --card:#FFFFFF; --ink:#15201B; --muted:#5D6862; --soft:#8A938E;
+    --line:#E1E5DE; --line-2:#CDD3CA;
+    --accent:#1F5E45; --accent-2:#277353; --accent-soft:#E5EFE8; --accent-ink:#0F3B2A;
+    --warm:#F0B33F; --warm-soft:#FDF3DC; --danger:#B9402B; --danger-soft:#FBEAE6;
+    --r:16px; --r-sm:12px;
+    --shadow:0 1px 2px rgba(21,32,27,.04), 0 6px 24px rgba(21,32,27,.06);
+    --font:'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  html,body{margin:0;padding:0}
+  body{font-family:var(--font);color:var(--ink);background:var(--bg);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+  body::before{content:"";position:fixed;inset:0 0 auto 0;height:420px;pointer-events:none;z-index:0;
+    background:radial-gradient(900px 380px at 15% -10%, rgba(39,115,83,.13), transparent 70%), radial-gradient(700px 320px at 100% 0%, rgba(240,179,63,.12), transparent 70%)}
+  button{font:inherit;color:inherit;cursor:pointer}
+  input,textarea{font:inherit;color:inherit}
+  .wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:0 18px}
+
+  /* Шапка */
+  .top{position:sticky;top:0;z-index:20;background:rgba(243,244,239,.88);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid transparent;transition:border-color .2s}
+  .top.scrolled{border-bottom-color:var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:12px;height:58px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+  .brand .mark{width:28px;height:28px;border-radius:9px;background:var(--accent);display:grid;place-items:center;flex:none}
+  .top .spacer{flex:1}
+  .saved{font-size:13px;color:var(--soft);opacity:0;transition:opacity .3s;white-space:nowrap}
+  .saved.show{opacity:1}
+  .sections-btn{border:1px solid var(--line-2);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px}
+  .sections-btn[hidden]{display:none}
+  .progress{height:3px;background:var(--line);position:relative}
+  .progress i{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width .4s ease;border-radius:0 3px 3px 0}
+
+  main{position:relative;z-index:1;padding:28px 0 140px}
+  .screen{animation:in .28s ease both}
+  @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* Приветствие */
+  .badge{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);padding:6px 12px;border-radius:999px}
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent-2)}
+  h1{font-size:clamp(30px,6.6vw,46px);line-height:1.08;letter-spacing:-.03em;margin:18px 0 14px;font-weight:800}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{font-size:clamp(16px,2.6vw,18px);color:var(--muted);margin:0 0 26px;max-width:600px}
+  .facts{display:grid;grid-template-columns:1fr;gap:10px;margin:0 0 26px}
+  @media(min-width:620px){.facts{grid-template-columns:1fr 1fr}}
+  .fact{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px 16px}
+  .fact svg{flex:none;margin-top:2px}
+  .fact b{display:block;font-size:15px}
+  .fact span{font-size:14px;color:var(--muted)}
+  .resume{background:var(--warm-soft);border:1px solid #F4DDA6;border-radius:var(--r);padding:16px 18px;margin:0 0 18px}
+  .resume b{display:block;margin-bottom:4px}
+  .resume p{margin:0 0 12px;color:var(--muted);font-size:14px}
+  .row-btns{display:flex;gap:10px;flex-wrap:wrap}
+  .note{font-size:13px;color:var(--soft);margin-top:16px}
+
+  /* Кнопки */
+  .btn{border:0;border-radius:14px;padding:15px 22px;font-weight:700;font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s, background .2s, box-shadow .2s;min-height:52px}
+  .btn:active{transform:scale(.98)}
+  a.btn{text-decoration:none}
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(31,94,69,.25)}
+  .btn-primary:hover{background:var(--accent-2)}
+  .btn-primary[disabled]{background:#8FA79B;box-shadow:none;cursor:default}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+  .btn-ghost:hover{background:#fff}
+  .btn-link{background:none;border:0;color:var(--accent);font-weight:700;padding:6px 0;text-decoration:underline;text-underline-offset:3px}
+  .btn-wide{width:100%}
+  @media(min-width:620px){.btn-wide{width:auto;min-width:260px}}
+  :focus-visible{outline:3px solid rgba(39,115,83,.45);outline-offset:2px}
+
+  /* Шаг */
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-2);margin:0 0 6px}
+  h2{font-size:clamp(24px,5vw,32px);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px;font-weight:800}
+  .intro{color:var(--muted);margin:0 0 22px}
+  .q{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 18px 16px;margin:0 0 12px;box-shadow:var(--shadow);transition:border-color .2s, box-shadow .2s}
+  .q[hidden]{display:none}
+  .q.reveal{animation:in .25s ease both}
+  .q.error{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
+  .q-label{display:block;font-weight:700;font-size:16.5px;line-height:1.35;margin:0 0 4px}
+  .req{display:inline-block;font-size:11.5px;font-weight:700;color:var(--danger);background:var(--danger-soft);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:2px}
+  .q-hint{font-size:14px;color:var(--muted);margin:0 0 4px}
+  .q-body{margin-top:12px}
+  .err-msg{display:none;color:var(--danger);font-size:14px;font-weight:600;margin-top:8px}
+  .q.error .err-msg{display:block}
+
+  /* Варианты */
+  .opts{display:grid;gap:8px}
+  .opts.chips{display:flex;flex-wrap:wrap}
+  .opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;background:#FAFBF8;border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:15.5px;line-height:1.3;min-height:48px;transition:border-color .15s, background .15s, color .15s}
+  .chips .opt{width:auto;padding:10px 16px;border-radius:999px;min-height:44px}
+  .opt:hover{border-color:var(--line-2);background:#fff}
+  .opt .ind{flex:none;width:20px;height:20px;border:2px solid var(--line-2);border-radius:50%;display:grid;place-items:center;transition:all .15s;background:#fff}
+  .opt[role=checkbox] .ind{border-radius:6px}
+  .chips .opt .ind{display:none}
+  .opt[aria-checked=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .opt[aria-checked=true] .ind{border-color:var(--accent);background:var(--accent)}
+  .opt[aria-checked=true] .ind::after{content:"";width:6px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  .opt[role=radio][aria-checked=true] .ind::after{width:8px;height:8px;border:0;border-radius:50%;background:#fff;transform:none}
+  .chips .opt[aria-checked=true]{background:var(--accent);color:#fff}
+  .opts .sec{background:transparent;border-style:dashed;color:var(--muted);font-size:14.5px}
+  .opts .sec[aria-checked=true]{border-style:solid}
+  .other-input{margin-top:10px}
+  .other-input[hidden]{display:none}
+
+  /* Поля */
+  .field{width:100%;border:1.5px solid var(--line);background:#FAFBF8;border-radius:var(--r-sm);padding:13px 14px;font-size:16px;transition:border-color .15s, background .15s;outline:none}
+  .field:focus{border-color:var(--accent);background:#fff}
+  .field::placeholder{color:#A2AAA5}
+  textarea.field{min-height:96px;resize:vertical;line-height:1.45}
+  .field-row{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+  .field-row .field{flex:1 1 180px}
+  .field-row.num .field{flex:0 1 200px}
+  .unk{border:1.5px dashed var(--line-2);background:transparent;border-radius:var(--r-sm);padding:0 16px;font-size:14.5px;color:var(--muted);min-height:48px}
+  .unk[aria-pressed=true]{border-style:solid;border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .approx{font-size:13px;color:var(--soft);margin-top:6px}
+
+  /* Нижняя панель */
+  .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(243,244,239,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:12px 0 calc(12px + env(safe-area-inset-bottom))}
+  .nav[hidden]{display:none}
+  .nav .wrap{display:flex;gap:10px;align-items:center}
+  .nav .btn-ghost{flex:0 0 auto;padding:15px 18px}
+  .nav .btn-primary{flex:1}
+  @media(min-width:620px){.nav .btn-primary{flex:0 0 auto;min-width:220px;margin-left:auto}}
+
+  /* Проверка */
+  .sum{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin:0 0 18px;box-shadow:var(--shadow)}
+  .sum-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid var(--line)}
+  .sum-row:first-child{border-top:0}
+  .sum-row .t{flex:1;min-width:0}
+  .sum-row .t b{display:block;font-size:15px;line-height:1.3}
+  .sum-row .t span{font-size:13.5px;color:var(--muted)}
+  .pill{font-size:12.5px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap}
+  .pill.ok{background:var(--accent-soft);color:var(--accent-ink)}
+  .pill.part{background:var(--warm-soft);color:#7A5410}
+  .alert{border-radius:var(--r-sm);padding:14px 16px;margin:0 0 16px;font-size:15px}
+  .alert.err{background:var(--danger-soft);color:#7D2A1B;border:1px solid #F1C7BE}
+  .alert.info{background:var(--accent-soft);color:var(--accent-ink)}
+  .spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+
+  /* Финал */
+  .done{text-align:center;padding-top:20px}
+  .done .ok-ico{width:76px;height:76px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin:0 auto 18px;box-shadow:0 10px 30px rgba(31,94,69,.3)}
+  .done .lead{margin-left:auto;margin-right:auto}
+  .next-steps{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:22px 0;box-shadow:var(--shadow)}
+  .next-steps ol{margin:8px 0 0;padding-left:20px}
+  .next-steps li{margin:6px 0;color:var(--muted)}
+  .code{font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.06em}
+
+  /* Список разделов */
+  .drawer{position:fixed;inset:0;z-index:40;display:none}
+  .drawer.open{display:block}
+  .drawer .bd{position:absolute;inset:0;background:rgba(21,32,27,.35);animation:fade .2s both}
+  @keyframes fade{from{opacity:0}}
+  .drawer .panel{position:absolute;right:0;top:0;bottom:0;width:min(380px,92vw);background:var(--bg);padding:20px 16px calc(20px + env(safe-area-inset-bottom));overflow:auto;animation:slide .25s ease both;box-shadow:-10px 0 40px rgba(0,0,0,.12)}
+  @keyframes slide{from{transform:translateX(40px);opacity:0}}
+  .drawer h3{margin:4px 6px 14px;font-size:18px}
+  .drawer .item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;padding:12px 10px;border-radius:12px;font-size:15px}
+  .drawer .item:hover:not([disabled]){background:#fff}
+  .drawer .item[disabled]{color:var(--soft);cursor:default}
+  .drawer .item.cur{background:#fff;font-weight:700;box-shadow:var(--shadow)}
+  .drawer .n{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:700;background:var(--line);color:var(--muted)}
+  .drawer .item.visited .n{background:var(--accent-soft);color:var(--accent-ink)}
+  .drawer .item.cur .n{background:var(--accent);color:#fff}
+  .close-x{float:right;border:0;background:transparent;font-size:26px;line-height:1;padding:2px 8px;color:var(--muted)}
+
+  .toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:11px 16px;border-radius:12px;font-size:14.5px;opacity:0;pointer-events:none;transition:all .25s;z-index:50;max-width:calc(100vw - 32px);text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%)}
+
+  @media(max-width:420px){ .brand .full{display:none} .q{padding:16px 14px 14px} }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+  <header class="top" id="top">
+    <div class="wrap">
+      <div class="brand">
+        <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+        <span>Бизнес-разбор<span class="full"></span></span>
+      </div>
+      <div class="spacer"></div>
+      <span class="saved" id="saved">Сохранено</span>
+      <button class="sections-btn" id="sectionsBtn" type="button" hidden aria-haspopup="dialog">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span id="stepCounter">Разделы</span>
+      </button>
+    </div>
+    <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+  </header>
+
+  <main><div class="wrap" id="view" aria-live="polite"></div></main>
+
+  <nav class="nav" id="nav" hidden>
+    <div class="wrap">
+      <button class="btn btn-ghost" id="backBtn" type="button" aria-label="Назад">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        <span>Назад</span>
+      </button>
+      <button class="btn btn-primary" id="nextBtn" type="button">Далее</button>
+    </div>
+  </nav>
+
+  <div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Разделы анкеты">
+    <div class="bd" data-close="1"></div>
+    <div class="panel">
+      <button class="close-x" type="button" data-close="1" aria-label="Закрыть">×</button>
+      <h3>Разделы</h3>
+      <div id="drawerList"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+<script>
+var SCHEMA = {"key":"ofp","title":"ОФП (TL Kids): точки роста","subtitle":"Короткий разбор: как устроено направление, откуда приходят клиенты и что мешает их становиться больше.","minutes":"5–7 минут","steps":[{"id":"o1","title":"О направлении","intro":"Франшизы устроены по-разному, поэтому важно описание именно вашего случая.","questions":[{"id":"name","type":"text","label":"Как к вам обращаться?","required":true,"placeholder":"Имя","nk":false},{"id":"what","type":"textarea","label":"Опишите своими словами, что получает клиент и за что платит","hint":"Например: занятия ОФП для детей 5–10 лет, 2 раза в неделю, абонемент на месяц."},{"id":"age","type":"multi","label":"Какого возраста дети?","options":["3–5 лет","6–8 лет","9–12 лет","13+ лет"],"nk":false},{"id":"clients","type":"number","label":"Сколько сейчас активных клиентов?"},{"id":"price","type":"text","label":"Сколько стоит абонемент или занятие?","placeholder":"Например: 5 000 ₽ в месяц","nk":true}]},{"id":"o2","title":"Новые клиенты","intro":"Цифры можно указывать примерно.","questions":[{"id":"sources","type":"multi","label":"Откуда приходят новые клиенты?","options":["Рекомендации знакомых","Заявки от франчайзера","Соцсети","Яндекс Карты или 2ГИС","Реклама в интернете","Листовки, мероприятия"],"other":true},{"id":"leads","type":"number","label":"Сколько обращений приходит в месяц?"},{"id":"conv","type":"single","label":"Из 10 обратившихся сколько в итоге начинают заниматься?","options":["1–2","3–4","5–6","7–8","9–10"]},{"id":"speed","type":"single","label":"Как быстро обычно отвечаете на сообщение или звонок?","options":["До 15 минут","В течение часа","В течение дня","На следующий день и позже"]}]},{"id":"o3","title":"Франшиза","intro":"Что даёт франчайзер и что вы решаете сами.","questions":[{"id":"gives","type":"multi","label":"Что даёт франчайзер для привлечения клиентов?","options":["Рекламные макеты и тексты","Сайт или страницу для города","Заявки с общей рекламы","Программу учёта (CRM)","Обучение продажам","Ничего из этого"],"exclusive":["Ничего из этого"],"other":true},{"id":"limits","type":"multi","label":"Какие есть ограничения?","options":["Цены задаёт франчайзер","Только утверждённая реклама","Нельзя свой сайт или соцсети","Акции нужно согласовывать","Ограничений почти нет"],"exclusive":["Ограничений почти нет"],"other":true}]},{"id":"o4","title":"Удержание, реклама и цели","intro":"Последний раздел.","questions":[{"id":"churn_why","type":"multi","label":"Почему клиенты перестают ходить?","options":["Дорого","Неудобное время или место","Ребёнку стало неинтересно","Лето, каникулы, болезни","Перешли в другую секцию"],"other":true},{"id":"base","type":"multi","label":"Где хранятся контакты клиентов и тех, кто обращался?","options":["CRM-программа","Google или Excel-таблица","Тетрадь или журнал","В переписках и телефоне","Нигде не ведём","Программа франчайзера"],"exclusive":["Нигде не ведём"],"nk":false},{"id":"budget","type":"single","label":"Сколько в месяц уходит на рекламу?","options":["Не тратим","До 10 тыс. ₽","10–30 тыс. ₽","30–70 тыс. ₽","Больше 70 тыс. ₽","Рекламу ведёт франчайзер"]},{"id":"goal","type":"number","label":"Сколько новых клиентов в месяц хотели бы получать?"},{"id":"first","type":"single","label":"Что важнее всего улучшить в первую очередь?","options":["Больше обращений","Больше продаж из тех обращений, что уже есть","Чтобы ученики дольше оставались","Освободить своё время от рутины"],"other":true,"nk":false},{"id":"problem","type":"textarea","label":"Что, по-вашему, главная причина нехватки клиентов?","hint":"Своими словами, как есть."}]}]};
+var CONFIG = {"tgUser":"","tgName":"Сергея Белова"};
+function evalCond(cond, answers) {
+  if (!cond) return true;
+  if (cond.all) { for (var i = 0; i < cond.all.length; i++) if (!evalCond(cond.all[i], answers)) return false; return true; }
+  if (cond.any) { for (var j = 0; j < cond.any.length; j++) if (evalCond(cond.any[j], answers)) return true; return false; }
+  var v = answers ? answers[cond.q] : undefined;
+  var arr = Array.isArray(v) ? v : (v === undefined || v === null || v === '' ? [] : [String(v)]);
+  if (cond.filled) return arr.length > 0;
+  if ('eq' in cond) return arr.length === 1 && arr[0] === cond.eq;
+  if ('has' in cond) return arr.indexOf(cond.has) !== -1;
+  if (cond['in']) { for (var k = 0; k < arr.length; k++) if (cond['in'].indexOf(arr[k]) !== -1) return true; return false; }
+  if (cond.notIn) { for (var m = 0; m < arr.length; m++) if (cond.notIn.indexOf(arr[m]) !== -1) return false; return true; }
+  return true;
+}
+
+function normalizeQuestion(q) {
+  var out = {};
+  for (var key in q) out[key] = q[key];
+  var isChoice = q.type === 'single' || q.type === 'multi';
+  var opts = isChoice ? (q.options || []).slice() : [];
+  var excl = (q.exclusive || []).slice();
+  var wantNk = (isChoice || q.type === 'number') ? q.nk !== false : (q.type === 'text' && q.nk === true);
+  if (isChoice) {
+    if (q.other) opts.push('Другое');
+    if (q.na) { opts.push('Не применимо'); excl.push('Не применимо'); }
+    if (wantNk) { opts.push('Не знаю'); excl.push('Не знаю'); }
+  }
+  out.options = opts;
+  out.exclusive = excl;
+  out.allowUnknown = (q.type === 'number' || q.type === 'text') && wantNk;
+  return out;
+}
+
+function visibleStructure(schema, answers) {
+  var steps = [];
+  for (var i = 0; i < schema.steps.length; i++) {
+    var s = schema.steps[i];
+    if (!evalCond(s.showIf, answers)) continue;
+    var qs = [];
+    for (var j = 0; j < s.questions.length; j++) {
+      if (evalCond(s.questions[j].showIf, answers)) qs.push(s.questions[j].id);
+    }
+    steps.push({ id: s.id, questions: qs });
+  }
+  return steps;
+}
+</script>
+<script>
+(function () {
+  'use strict';
+  var NK = 'Не знаю', OTHER = 'Другое';
+  var STORE = 'bizdiag_short_' + SCHEMA.key + '_v1';
+  var Q = {};
+  SCHEMA.steps.forEach(function (s) {
+    s.questions = s.questions.map(function (q) { var n = normalizeQuestion(q); Q[n.id] = n; return n; });
+  });
+
+  var $ = function (id) { return document.getElementById(id); };
+  var view = $('view'), nav = $('nav'), nextBtn = $('nextBtn'), backBtn = $('backBtn');
+
+  /* ---------- Черновик ---------- */
+  var storageOk = (function () { try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); return true; } catch (e) { return false; } })();
+  function uuid() {
+    try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+  }
+  function fresh() { return { v: 1, id: uuid(), startedAt: new Date().toISOString(), answers: {}, screen: 'welcome', visited: {}, submitted: null }; }
+  function load() {
+    if (!storageOk) return null;
+    try { var s = JSON.parse(localStorage.getItem(STORE) || 'null'); return s && s.v === 1 && s.id ? s : null; } catch (e) { return null; }
+  }
+  var savedTimer;
+  function save(silent) {
+    if (!storageOk) return;
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { return; }
+    if (silent) return;
+    var el = $('saved'); el.classList.add('show');
+    clearTimeout(savedTimer); savedTimer = setTimeout(function () { el.classList.remove('show'); }, 1400);
+  }
+  var state = load() || fresh();
+  var A = state.answers;
+  // Вернулись к анкете позже: сначала показываем экран «Продолжить».
+  if (!state.submitted && state.screen !== 'welcome') { if (stepById(state.screen)) state.lastStep = state.screen; state.screen = 'welcome'; }
+
+  /* ---------- Утилиты ---------- */
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function isEmpty(v) { return v === undefined || v === null || v === '' || (Array.isArray(v) && v.length === 0); }
+  function visibleSteps() { return SCHEMA.steps.filter(function (s) { return evalCond(s.showIf, A); }); }
+  function visibleQs(step) { return step.questions.filter(function (q) { return evalCond(q.showIf, A); }); }
+  function stepById(id) { for (var i = 0; i < SCHEMA.steps.length; i++) if (SCHEMA.steps[i].id === id) return SCHEMA.steps[i]; return null; }
+  function toast(msg) { var t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('show'); }, 2600); }
+  function firstName() { return (A.name || '').split(/\s+/)[0]; }
+  var ICON = {
+    time: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277353" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    save: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg>',
+    skip: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277353" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9a3 3 0 1 1 4 2.8c-.6.3-1 .9-1 1.6V14"/><circle cx="12" cy="18" r=".6" fill="#277353"/><circle cx="12" cy="12" r="9"/></svg>',
+    lock: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277353" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'
+  };
+
+  /* ---------- Экраны ---------- */
+  function go(screen) {
+    state.screen = screen;
+    if (stepById(screen)) state.visited[screen] = true;
+    save(true);
+    render();
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  function render() {
+    var s = state.screen;
+    if (state.submitted) s = 'done';
+    if (s !== 'welcome' && s !== 'review' && s !== 'done' && !(stepById(s) && evalCond(stepById(s).showIf, A))) s = 'welcome';
+    if (s === 'welcome') renderWelcome();
+    else if (s === 'review') renderReview();
+    else if (s === 'done') renderDone();
+    else renderStep(stepById(s));
+    updateChrome(s);
+  }
+
+  function hasProgress() { return Object.keys(A).some(function (k) { return !isEmpty(A[k]); }); }
+
+  function renderWelcome() {
+    var resume = hasProgress();
+    var html = '<section class="screen">' +
+      '<span class="badge"><span class="dot"></span>Бизнес-разбор</span>' +
+      '<h1>' + esc(SCHEMA.title.split(':')[0]) + ':<br><em>' + esc(SCHEMA.title.split(':').slice(1).join(':').trim()) + '</em></h1>' +
+      '<p class="lead">' + esc(SCHEMA.subtitle) + '</p>';
+    if (resume) {
+      html += '<div class="resume"><b>У вас есть незаконченная анкета</b><p>Ответы сохранены на этом устройстве. Можно продолжить с того места, где вы остановились.</p>' +
+        '<div class="row-btns"><button class="btn btn-primary" type="button" data-act="resume">Продолжить</button>' +
+        '<button class="btn btn-ghost" type="button" data-act="restart">Начать заново</button></div></div>';
+    }
+    html += '<div class="facts">' +
+      fact(ICON.time, 'Около ' + SCHEMA.minutes, 'Большинство вопросов в одно касание') +
+      fact(ICON.save, 'Можно прерваться', storageOk ? 'Ответы сохраняются на этом устройстве' : 'В этом браузере черновик не сохраняется, лучше пройти за один раз') +
+      fact(ICON.skip, 'Не нужно знать всё', 'Есть вариант «Не знаю», необязательные вопросы можно пропустить') +
+      fact(ICON.lock, 'Без лишних данных', 'Ответы уйдут одним сообщением в Telegram') +
+      '</div>';
+    if (!resume) html += '<button class="btn btn-primary btn-wide" type="button" data-act="start">Начать разбор<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
+    html += '<p class="note">Ответы увидит только консультант, который отправил вам эту ссылку.</p></section>';
+    view.innerHTML = html;
+  }
+  function fact(icon, t, d) { return '<div class="fact">' + icon + '<div><b>' + esc(t) + '</b><span>' + esc(d) + '</span></div></div>'; }
+
+  function renderStep(step) {
+    var steps = visibleSteps(), idx = steps.indexOf(step);
+    var html = '<section class="screen"><p class="kicker" id="kicker">Раздел ' + (idx + 1) + ' из ' + steps.length + '</p>' +
+      '<h2>' + esc(step.title) + '</h2>' + (step.intro ? '<p class="intro">' + esc(step.intro) + '</p>' : '');
+    step.questions.forEach(function (q) { html += renderQ(q); });
+    html += '</section>';
+    view.innerHTML = html;
+    view.querySelectorAll('textarea').forEach(autosize);
+  }
+
+  function renderQ(q) {
+    var visible = evalCond(q.showIf, A);
+    var h = '<div class="q" data-q="' + q.id + '"' + (visible ? '' : ' hidden') + '>';
+    var inputId = 'f_' + q.id;
+    var labelTag = (q.type === 'single' || q.type === 'multi') ? 'p' : 'label';
+    h += '<' + labelTag + ' class="q-label"' + (labelTag === 'label' ? ' for="' + inputId + '"' : ' id="l_' + q.id + '"') + '>' + esc(q.label) + (q.required ? '<span class="req">обязательно</span>' : '') + '</' + labelTag + '>';
+    if (q.hint) h += '<p class="q-hint">' + esc(q.hint) + '</p>';
+    if (q.type === 'multi' && !q.hint) h += '<p class="q-hint">Можно выбрать несколько</p>';
+    h += '<div class="q-body">';
+    var v = A[q.id];
+    if (q.type === 'single' || q.type === 'multi') {
+      var main = q.options.filter(function (o) { return o !== NK && o !== 'Не применимо'; });
+      var sec = q.options.filter(function (o) { return o === NK || o === 'Не применимо'; });
+      var chips = main.length <= 6 && main.every(function (o) { return o.length <= 18; });
+      h += '<div class="opts' + (chips ? ' chips' : '') + '" role="' + (q.type === 'single' ? 'radiogroup' : 'group') + '" aria-labelledby="l_' + q.id + '">';
+      main.concat(sec).forEach(function (o) {
+        var on = q.type === 'multi' ? (Array.isArray(v) && v.indexOf(o) !== -1) : v === o;
+        h += '<button type="button" class="opt' + (sec.indexOf(o) !== -1 ? ' sec' : '') + '" role="' + (q.type === 'single' ? 'radio' : 'checkbox') + '" aria-checked="' + on + '" data-q="' + q.id + '" data-v="' + esc(o) + '"><span class="ind"></span><span>' + esc(o) + '</span></button>';
+      });
+      h += '</div>';
+      if (q.options.indexOf(OTHER) !== -1) {
+        var otherOn = q.type === 'multi' ? (Array.isArray(v) && v.indexOf(OTHER) !== -1) : v === OTHER;
+        h += '<input class="field other-input" type="text" maxlength="500" data-other="' + q.id + '" placeholder="Напишите свой вариант" aria-label="Свой вариант" value="' + esc(A[q.id + '__other'] || '') + '"' + (otherOn ? '' : ' hidden') + '>';
+      }
+    } else if (q.type === 'textarea') {
+      h += '<textarea class="field" id="' + inputId + '" data-in="' + q.id + '" maxlength="3000" placeholder="' + esc(q.placeholder || 'Ваш ответ') + '">' + esc(v || '') + '</textarea>';
+    } else {
+      var isNum = q.type === 'number', unk = v === NK;
+      h += '<div class="field-row' + (isNum ? ' num' : '') + '"><input class="field" id="' + inputId + '" type="text" data-in="' + q.id + '"' +
+        (isNum ? ' inputmode="numeric" maxlength="12" data-num="1"' : ' maxlength="300"') +
+        ' placeholder="' + esc(q.placeholder || (isNum ? 'Число' : 'Ваш ответ')) + '" value="' + esc(unk ? '' : (v || '')) + '"' + (q.required ? ' required' : '') + ' autocomplete="off">';
+      if (q.allowUnknown) h += '<button type="button" class="unk" data-unk="' + q.id + '" aria-pressed="' + unk + '">Не знаю</button>';
+      h += '</div>';
+      if (isNum && !q.hint) h += '<p class="approx">Можно примерно</p>';
+    }
+    h += '<p class="err-msg">Ответьте, пожалуйста, на этот вопрос</p></div></div>';
+    return h;
+  }
+
+  function autosize(t) { t.style.height = 'auto'; t.style.height = Math.min(t.scrollHeight + 2, 420) + 'px'; }
+
+  /* ---------- Ответы ---------- */
+  function setAnswer(id, v) {
+    if (isEmpty(v)) delete A[id]; else A[id] = v;
+    state.sent = {};
+    var box = view.querySelector('.q[data-q="' + id + '"]');
+    if (box) box.classList.remove('error');
+    save();
+    applyVisibility();
+    updateChrome(state.screen);
+  }
+
+  function toggleOpt(id, val) {
+    var q = Q[id], cur = A[id];
+    if (q.type === 'single') {
+      setAnswer(id, cur === val && !q.required ? undefined : val);
+    } else {
+      var arr = Array.isArray(cur) ? cur.slice() : [];
+      var i = arr.indexOf(val);
+      if (i !== -1) arr.splice(i, 1);
+      else if (q.exclusive.indexOf(val) !== -1) arr = [val];
+      else { arr = arr.filter(function (x) { return q.exclusive.indexOf(x) === -1; }); arr.push(val); }
+      setAnswer(id, arr);
+    }
+    syncOpts(id);
+  }
+
+  function syncOpts(id) {
+    var q = Q[id], v = A[id];
+    view.querySelectorAll('.opt[data-q="' + id + '"]').forEach(function (b) {
+      var o = b.getAttribute('data-v');
+      b.setAttribute('aria-checked', String(q.type === 'multi' ? (Array.isArray(v) && v.indexOf(o) !== -1) : v === o));
+    });
+    var oi = view.querySelector('[data-other="' + id + '"]');
+    if (oi) {
+      var on = q.type === 'multi' ? (Array.isArray(v) && v.indexOf(OTHER) !== -1) : v === OTHER;
+      var was = !oi.hidden; oi.hidden = !on;
+      if (on && !was) oi.focus();
+    }
+  }
+
+  function applyVisibility() {
+    view.querySelectorAll('.q[data-q]').forEach(function (box) {
+      var vis = evalCond(Q[box.getAttribute('data-q')].showIf, A);
+      if (vis && box.hidden) { box.hidden = false; box.classList.add('reveal'); }
+      else if (!vis && !box.hidden) { box.hidden = true; box.classList.remove('reveal'); }
+    });
+  }
+
+  view.addEventListener('click', function (e) {
+    var opt = e.target.closest('.opt');
+    if (opt) { toggleOpt(opt.getAttribute('data-q'), opt.getAttribute('data-v')); return; }
+    var unk = e.target.closest('.unk');
+    if (unk) {
+      var id = unk.getAttribute('data-unk'), on = A[id] === NK;
+      var inp = view.querySelector('[data-in="' + id + '"]');
+      if (!on && inp) inp.value = '';
+      setAnswer(id, on ? undefined : NK);
+      unk.setAttribute('aria-pressed', String(!on));
+      if (on && inp) inp.focus();
+      return;
+    }
+    var act = e.target.closest('[data-act]');
+    if (act) handleAct(act.getAttribute('data-act'), act);
+  });
+
+  view.addEventListener('input', function (e) {
+    var t = e.target;
+    if (t.hasAttribute('data-in')) {
+      var id = t.getAttribute('data-in');
+      if (t.hasAttribute('data-num')) {
+        var cleaned = t.value.replace(/[^\d\s.,]/g, '');
+        if (cleaned !== t.value) t.value = cleaned;
+      }
+      if (t.tagName === 'TEXTAREA') autosize(t);
+      var u = view.querySelector('[data-unk="' + id + '"]');
+      if (u) u.setAttribute('aria-pressed', 'false');
+      setAnswer(id, t.value.trim() === '' ? undefined : t.value);
+    } else if (t.hasAttribute('data-other')) {
+      var k = t.getAttribute('data-other') + '__other';
+      if (t.value.trim()) A[k] = t.value; else delete A[k];
+      save();
+    }
+  });
+
+  function handleAct(act, el) {
+    if (act === 'start') { go(visibleSteps()[0].id); }
+    else if (act === 'resume') {
+      var target = state.lastStep && stepById(state.lastStep) && evalCond(stepById(state.lastStep).showIf, A) ? state.lastStep : visibleSteps()[0].id;
+      go(target);
+    } else if (act === 'restart') {
+      if (!el.getAttribute('data-sure')) { el.setAttribute('data-sure', '1'); el.textContent = 'Точно? Нажмите ещё раз'; return; }
+      state = fresh(); A = state.answers; save(true); go('welcome');
+    } else if (act === 'edit') { go(el.getAttribute('data-step')); }
+    else if (act === 'tg') {
+      var total = buildParts().length, idx = +el.getAttribute('data-part');
+      state.sent = state.sent || {}; state.sent[idx] = true;
+      var all = true; for (var t = 0; t < total; t++) if (!state.sent[t]) all = false;
+      if (all) state.submitted = { at: new Date().toISOString() };
+      save(true);
+      setTimeout(function () { if (all) go('done'); else renderReview(); }, 400);
+    }
+    else if (act === 'copy') { copyText(el); }
+    else if (act === 'new') {
+      if (!el.getAttribute('data-sure')) { el.setAttribute('data-sure', '1'); el.textContent = 'Начать новую анкету? Нажмите ещё раз'; return; }
+      state = fresh(); A = state.answers; save(true); go('welcome');
+    }
+  }
+
+  /* ---------- Навигация ---------- */
+  function validate(step) {
+    var bad = null;
+    visibleQs(step).forEach(function (q) {
+      if (q.required && isEmpty(A[q.id])) {
+        var box = view.querySelector('.q[data-q="' + q.id + '"]');
+        if (box) { box.classList.add('error'); bad = bad || box; }
+      }
+    });
+    if (bad) {
+      bad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      toast('Ответьте на отмеченные вопросы');
+      return false;
+    }
+    return true;
+  }
+
+  nextBtn.addEventListener('click', function () {
+    var step = stepById(state.screen);
+    if (!step) return;
+    if (!validate(step)) return;
+    var steps = visibleSteps(), i = steps.indexOf(step);
+    state.lastStep = i + 1 < steps.length ? steps[i + 1].id : step.id;
+    go(i + 1 < steps.length ? steps[i + 1].id : 'review');
+  });
+  backBtn.addEventListener('click', function () {
+    var steps = visibleSteps();
+    if (state.screen === 'review') { go(steps[steps.length - 1].id); return; }
+    var i = steps.indexOf(stepById(state.screen));
+    go(i > 0 ? steps[i - 1].id : 'welcome');
+  });
+
+  function updateChrome(s) {
+    var steps = visibleSteps(), step = stepById(s), total = steps.length + 1;
+    var pos = s === 'welcome' ? 0 : s === 'review' ? steps.length : s === 'done' ? total : steps.indexOf(step);
+    $('bar').style.width = (s === 'done' ? 100 : Math.round(pos / total * 100)) + '%';
+    var inFlow = !!step || s === 'review';
+    nav.hidden = !inFlow;
+    nextBtn.hidden = s === 'review';
+    if (step) nextBtn.textContent = steps.indexOf(step) === steps.length - 1 ? 'Проверить и отправить' : 'Далее';
+    $('sectionsBtn').hidden = !inFlow;
+    $('stepCounter').textContent = step ? (steps.indexOf(step) + 1) + ' / ' + steps.length : 'Разделы';
+    if (step) state.lastStep = step.id;
+    var k = $('kicker'); if (k && step) k.textContent = 'Раздел ' + (steps.indexOf(step) + 1) + ' из ' + steps.length;
+  }
+
+  /* ---------- Разделы ---------- */
+  $('sectionsBtn').addEventListener('click', function () {
+    var steps = visibleSteps(), html = '';
+    steps.forEach(function (st, i) {
+      var visited = !!state.visited[st.id], cur = state.screen === st.id;
+      html += '<button type="button" class="item' + (visited ? ' visited' : '') + (cur ? ' cur' : '') + '" data-step="' + st.id + '"' + (visited || cur ? '' : ' disabled') + '><span class="n">' + (visited && !cur ? '✓' : i + 1) + '</span><span>' + esc(st.title) + '</span></button>';
+    });
+    var allVisited = steps.every(function (st) { return state.visited[st.id]; });
+    html += '<button type="button" class="item' + (state.screen === 'review' ? ' cur' : '') + '" data-step="review"' + (allVisited ? '' : ' disabled') + '><span class="n">✓</span><span>Проверка и отправка</span></button>';
+    $('drawerList').innerHTML = html;
+    $('drawer').classList.add('open');
+  });
+  $('drawer').addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) { $('drawer').classList.remove('open'); return; }
+    var it = e.target.closest('.item[data-step]');
+    if (it && !it.disabled) { $('drawer').classList.remove('open'); go(it.getAttribute('data-step')); }
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') $('drawer').classList.remove('open'); });
+  window.addEventListener('scroll', function () { $('top').classList.toggle('scrolled', window.scrollY > 4); }, { passive: true });
+
+  /* ---------- Проверка и отправка ---------- */
+  function stats() {
+    var res = [], answered = 0, totalQ = 0;
+    visibleSteps().forEach(function (st) {
+      var qs = visibleQs(st), a = qs.filter(function (q) { return !isEmpty(A[q.id]); }).length;
+      answered += a; totalQ += qs.length;
+      res.push({ step: st, answered: a, total: qs.length });
+    });
+    return { rows: res, answered: answered, total: totalQ };
+  }
+
+  var sending = false, lastError = '';
+  function renderReview() {
+    var st = stats();
+    var html = '<section class="screen"><p class="kicker">Последний шаг</p><h2>Проверьте и отправьте</h2>' +
+      '<p class="intro">Вы ответили на ' + st.answered + ' из ' + st.total + ' вопросов. ' +
+      (st.answered < st.total ? 'Пропущенные можно оставить как есть: обсудим их при встрече.' : 'Отлично, всё заполнено.') + '</p>';
+    if (lastError) html += '<div class="alert err"><b>Не получилось отправить.</b><br>' + esc(lastError) + '</div>';
+    html += '<div class="sum">';
+    st.rows.forEach(function (r) {
+      var full = r.answered === r.total;
+      html += '<div class="sum-row"><div class="t"><b>' + esc(r.step.title) + '</b><span>Ответов: ' + r.answered + ' из ' + r.total + '</span></div>' +
+        '<span class="pill ' + (full ? 'ok' : 'part') + '">' + (full ? 'Готово' : 'Частично') + '</span>' +
+        '<button type="button" class="btn-link" data-act="edit" data-step="' + r.step.id + '">Изменить</button></div>';
+    });
+    html += '</div>';
+    var parts = buildParts(), sent = state.sent || {};
+    var TG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.3 2.9 11.5c-1.1.4-1.1 1.6 0 1.9l4.6 1.4 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.7 3.5c.7.5 1.7.1 1.9-.8L23 5.6c.2-1-.6-1.7-1.5-1.3ZM9.7 14.6l8.9-7.3-7.2 8.6-.3 3.1-1.4-4.4Z"/></svg>';
+    if (parts.length > 1) html += '<div class="alert info">Ответов много, поэтому они уйдут ' + parts.length + ' сообщениями. Нажмите кнопки по очереди: после каждой вернитесь на эту страницу.</div>';
+    html += '<div style="display:grid;gap:10px">';
+    parts.forEach(function (p, i) {
+      var label = parts.length > 1 ? 'Отправить часть ' + (i + 1) + ' из ' + parts.length : 'Отправить ответы в Telegram';
+      html += '<a class="btn ' + (sent[i] ? 'btn-ghost' : 'btn-primary') + ' btn-wide tg-part" id="submitBtn' + (i ? i + 1 : '') + '" data-act="tg" data-part="' + i + '" target="_blank" rel="noopener" href="' + esc(tgLink(i)) + '">' +
+        (sent[i] ? '✓ ' + label + ' (отправить ещё раз)' : TG + label) + '</a>';
+    });
+    html += '</div><p class="note">Откроется Telegram с готовым сообщением. Выберите ' + esc(CONFIG.tgName) + ' и нажмите «Отправить».</p></section>';
+    view.innerHTML = html;
+  }
+
+  function answerText(q) {
+    var v = A[q.id], other = A[q.id + '__other'];
+    var arr = Array.isArray(v) ? v : [v];
+    return arr.map(function (x) { return x === OTHER && other ? OTHER + ': ' + other : x; }).join(', ');
+  }
+  var MAX_PART = 3500;
+  function buildParts() {
+    var blocks = [], skipped = 0, n = 0;
+    visibleSteps().forEach(function (st) {
+      var lines = [];
+      visibleQs(st).forEach(function (q) {
+        n++;
+        if (isEmpty(A[q.id])) { skipped++; return; }
+        lines.push(n + '. ' + q.label + '\n→ ' + answerText(q));
+      });
+      if (lines.length) blocks.push('▪️ ' + st.title.toUpperCase() + '\n' + lines.join('\n'));
+    });
+    if (skipped) blocks.push('Без ответа: ' + skipped + ' вопр.');
+    var parts = [], cur = '';
+    blocks.forEach(function (b) {
+      while (b.length > MAX_PART) { if (cur) { parts.push(cur); cur = ''; } parts.push(b.slice(0, MAX_PART)); b = b.slice(MAX_PART); }
+      if (cur && (cur.length + b.length + 2) > MAX_PART) { parts.push(cur); cur = ''; }
+      cur = cur ? cur + '\n\n' + b : b;
+    });
+    if (cur) parts.push(cur);
+    var who = A.name ? ' · ' + A.name : '';
+    return parts.map(function (p, i) {
+      return '📋 ' + SCHEMA.title + who + (parts.length > 1 ? ' (часть ' + (i + 1) + ' из ' + parts.length + ')' : '') + '\n\n' + p;
+    });
+  }
+  function buildText() { return buildParts().join('\n\n'); }
+  function tgLink(i) {
+    var p = buildParts();
+    return 'https://t.me/share/url?url=' + encodeURIComponent(' ') + '&text=' + encodeURIComponent(p[i || 0] || '');
+  }
+  function copyText(btn) {
+    var t = buildText();
+    try {
+      navigator.clipboard.writeText(t).then(function () { if (btn) btn.textContent = 'Скопировано'; toast('Ответы скопированы'); }, fallbackCopy);
+    } catch (e) { fallbackCopy(); }
+    function fallbackCopy() {
+      var ta = document.getElementById('answersText');
+      if (ta) { ta.focus(); ta.select(); try { document.execCommand('copy'); toast('Ответы скопированы'); } catch (e2) { toast('Выделите текст и скопируйте вручную'); } }
+    }
+  }
+
+  function renderDone() {
+    view.innerHTML = '<section class="screen done">' +
+      '<div class="ok-ico"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>' +
+      '<h2>Спасибо' + (firstName() ? ', ' + esc(firstName()) : '') + '!</h2>' +
+      '<p class="lead">Проверьте, что сообщение с ответами ушло в Telegram. После этого страницу можно закрыть.</p>' +
+      '<div class="next-steps"><b>Telegram не открылся?</b><ol>' +
+      '<li>Нажмите «Скопировать ответы».</li>' +
+      '<li>Откройте чат ' + (CONFIG.tgUser ? '<a href="https://t.me/' + esc(CONFIG.tgUser) + '" target="_blank" rel="noopener">' + esc(CONFIG.tgName) + '</a>' : esc(CONFIG.tgName)) + ' и вставьте сообщение.</li></ol>' +
+      '<div class="row-btns" style="margin-top:14px"><button type="button" class="btn btn-ghost" data-act="copy">Скопировать ответы</button>' +
+      buildParts().map(function (p, i, arr) { return '<a class="btn btn-ghost" target="_blank" rel="noopener" href="' + esc(tgLink(i)) + '">Открыть Telegram' + (arr.length > 1 ? ', часть ' + (i + 1) : ' ещё раз') + '</a>'; }).join('') + '</div>' +
+      '<textarea id="answersText" class="field" readonly style="margin-top:14px;min-height:140px;font-size:13.5px">' + esc(buildText()) + '</textarea></div>' +
+      '<p><button type="button" class="btn-link" data-act="back-edit">Вернуться к ответам</button></p></section>';
+  }
+  view.addEventListener('click', function (e) {
+    if (e.target.closest('[data-act="back-edit"]')) { state.submitted = null; state.sent = {}; save(true); go('review'); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
