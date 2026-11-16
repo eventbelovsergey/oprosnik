@@ -221,7 +221,7 @@
   <div class="toast" id="toast" role="status"></div>
 
 <script>
-var SCHEMA = {"key":"ofp","title":"ОФП (TL Kids): точки роста","subtitle":"Короткий разбор: как устроено направление, откуда приходят клиенты и что мешает их становиться больше.","minutes":"5–7 минут","steps":[{"id":"o1","title":"О направлении","intro":"Франшизы устроены по-разному, поэтому важно описание именно вашего случая.","questions":[{"id":"name","type":"text","label":"Как к вам обращаться?","required":true,"placeholder":"Имя","nk":false},{"id":"what","type":"textarea","label":"Опишите своими словами, что получает клиент и за что платит","hint":"Например: занятия ОФП для детей 5–10 лет, 2 раза в неделю, абонемент на месяц."},{"id":"age","type":"multi","label":"Какого возраста дети?","options":["3–5 лет","6–8 лет","9–12 лет","13+ лет"],"nk":false},{"id":"clients","type":"number","label":"Сколько сейчас активных клиентов?"},{"id":"price","type":"text","label":"Сколько стоит абонемент или занятие?","placeholder":"Например: 5 000 ₽ в месяц","nk":true}]},{"id":"o2","title":"Новые клиенты","intro":"Цифры можно указывать примерно.","questions":[{"id":"sources","type":"multi","label":"Откуда приходят новые клиенты?","options":["Рекомендации знакомых","Заявки от франчайзера","Соцсети","Яндекс Карты или 2ГИС","Реклама в интернете","Листовки, мероприятия"],"other":true},{"id":"leads","type":"number","label":"Сколько обращений приходит в месяц?"},{"id":"conv","type":"single","label":"Из 10 обратившихся сколько в итоге начинают заниматься?","options":["1–2","3–4","5–6","7–8","9–10"]},{"id":"speed","type":"single","label":"Как быстро обычно отвечаете на сообщение или звонок?","options":["До 15 минут","В течение часа","В течение дня","На следующий день и позже"]}]},{"id":"o3","title":"Франшиза","intro":"Что даёт франчайзер и что вы решаете сами.","questions":[{"id":"gives","type":"multi","label":"Что даёт франчайзер для привлечения клиентов?","options":["Рекламные макеты и тексты","Сайт или страницу для города","Заявки с общей рекламы","Программу учёта (CRM)","Обучение продажам","Ничего из этого"],"exclusive":["Ничего из этого"],"other":true},{"id":"limits","type":"multi","label":"Какие есть ограничения?","options":["Цены задаёт франчайзер","Только утверждённая реклама","Нельзя свой сайт или соцсети","Акции нужно согласовывать","Ограничений почти нет"],"exclusive":["Ограничений почти нет"],"other":true}]},{"id":"o4","title":"Удержание, реклама и цели","intro":"Последний раздел.","questions":[{"id":"churn_why","type":"multi","label":"Почему клиенты перестают ходить?","options":["Дорого","Неудобное время или место","Ребёнку стало неинтересно","Лето, каникулы, болезни","Перешли в другую секцию"],"other":true},{"id":"base","type":"multi","label":"Где хранятся контакты клиентов и тех, кто обращался?","options":["CRM-программа","Google или Excel-таблица","Тетрадь или журнал","В переписках и телефоне","Нигде не ведём","Программа франчайзера"],"exclusive":["Нигде не ведём"],"nk":false},{"id":"budget","type":"single","label":"Сколько в месяц уходит на рекламу?","options":["Не тратим","До 10 тыс. ₽","10–30 тыс. ₽","30–70 тыс. ₽","Больше 70 тыс. ₽","Рекламу ведёт франчайзер"]},{"id":"goal","type":"number","label":"Сколько новых клиентов в месяц хотели бы получать?"},{"id":"first","type":"single","label":"Что важнее всего улучшить в первую очередь?","options":["Больше обращений","Больше продаж из тех обращений, что уже есть","Чтобы ученики дольше оставались","Освободить своё время от рутины"],"other":true,"nk":false},{"id":"problem","type":"textarea","label":"Что, по-вашему, главная причина нехватки клиентов?","hint":"Своими словами, как есть."}]}]};
+var SCHEMA = {"key":"ofp","title":"ОФП (TL Kids): точки роста","subtitle":"Короткий разбор: как устроено направление, откуда приходят клиенты и что мешает их числу расти.","minutes":"5–7 минут","steps":[{"id":"o1","title":"О направлении","intro":"Франшизы устроены по-разному, поэтому важно описание именно вашего случая.","questions":[{"id":"name","type":"text","label":"Как к вам обращаться?","required":true,"placeholder":"Имя","nk":false,"short":"Имя"},{"id":"what","type":"textarea","label":"Опишите своими словами, что получает клиент и за что платит","hint":"Например: занятия ОФП для детей 5–10 лет, 2 раза в неделю, абонемент на месяц.","short":"Что получает клиент"},{"id":"age","type":"multi","label":"Какого возраста дети?","options":["3–5 лет","6–8 лет","9–12 лет","13+ лет"],"nk":false,"short":"Возраст детей"},{"id":"clients","type":"number","label":"Сколько сейчас активных клиентов?","short":"Активных клиентов"},{"id":"price","type":"text","label":"Сколько стоит абонемент или занятие?","placeholder":"Например: 5 000 ₽ в месяц","nk":true,"short":"Цена"}],"short":"НАПРАВЛЕНИЕ","grouped":true},{"id":"o2","title":"Новые клиенты","intro":"Цифры можно указывать примерно.","questions":[{"id":"sources","type":"multi","label":"Откуда приходят новые клиенты?","options":["Рекомендации знакомых","Заявки от франчайзера","Соцсети","Яндекс Карты или 2ГИС","Реклама в интернете","Листовки, мероприятия"],"other":true,"short":"Откуда узнают"},{"id":"leads","type":"number","label":"Сколько обращений приходит в месяц?","short":"Обращений в месяц"},{"id":"conv","type":"single","label":"Из 10 обратившихся сколько в итоге начинают заниматься?","options":["1–2","3–4","5–6","7–8","9–10"],"short":"Из 10 обратившихся покупают"},{"id":"speed","type":"single","label":"Как быстро обычно отвечаете на сообщение или звонок?","options":["До 15 минут","В течение часа","В течение дня","На следующий день и позже"],"short":"Скорость ответа"}],"short":"НОВЫЕ КЛИЕНТЫ","grouped":true},{"id":"o3","title":"Франшиза","intro":"Что даёт франчайзер и что вы решаете сами.","questions":[{"id":"gives","type":"multi","label":"Что даёт франчайзер для привлечения клиентов?","options":["Рекламные макеты и тексты","Сайт или страницу для города","Заявки с общей рекламы","Программу учёта (CRM)","Обучение продажам","Ничего из этого"],"exclusive":["Ничего из этого"],"other":true,"short":"Даёт франчайзер"},{"id":"limits","type":"multi","label":"Какие есть ограничения?","options":["Цены задаёт франчайзер","Только утверждённая реклама","Нельзя свой сайт или соцсети","Акции нужно согласовывать","Ограничений почти нет"],"exclusive":["Ограничений почти нет"],"other":true,"short":"Ограничения"}],"short":"ФРАНШИЗА","grouped":true},{"id":"o4","title":"Удержание, реклама и цели","intro":"Последний раздел.","questions":[{"id":"churn_why","type":"multi","label":"Почему клиенты перестают ходить?","options":["Дорого","Неудобное время или место","Ребёнку стало неинтересно","Лето, каникулы, болезни","Перешли в другую секцию"],"other":true,"short":"Почему уходят"},{"id":"base","type":"multi","label":"Где хранятся контакты клиентов и тех, кто обращался?","options":["CRM-программа","Google или Excel-таблица","Тетрадь или журнал","В переписках и телефоне","Нигде не ведём","Программа франчайзера"],"exclusive":["Нигде не ведём"],"nk":false,"short":"Где контакты"},{"id":"budget","type":"single","label":"Сколько в месяц уходит на рекламу?","options":["Не тратим","До 10 тыс. ₽","10–30 тыс. ₽","30–70 тыс. ₽","Больше 70 тыс. ₽","Рекламу ведёт франчайзер"],"short":"Бюджет в месяц"},{"id":"goal","type":"number","label":"Сколько новых клиентов в месяц хотели бы получать?","short":"Цель: новых в месяц"},{"id":"first","type":"single","label":"Что важнее всего улучшить в первую очередь?","options":["Больше обращений","Больше продаж из тех обращений, что уже есть","Чтобы ученики дольше оставались","Освободить своё время от рутины"],"other":true,"nk":false,"short":"Улучшить в первую очередь"},{"id":"problem","type":"textarea","label":"Что, по-вашему, главная причина нехватки клиентов?","hint":"Своими словами, как есть.","short":"Главная причина"}],"short":"УДЕРЖАНИЕ И ЦЕЛИ","grouped":true}]};
 var CONFIG = {"tgUser":"","tgName":"Сергея Белова"};
 function evalCond(cond, answers) {
   if (!cond) return true;
@@ -635,30 +635,39 @@ function visibleStructure(schema, answers) {
     var arr = Array.isArray(v) ? v : [v];
     return arr.map(function (x) { return x === OTHER && other ? OTHER + ': ' + other : x; }).join(', ');
   }
-  var MAX_PART = 3500;
+  var MAX_PART = 4000;
   function buildParts() {
-    var blocks = [], skipped = 0, n = 0;
+    var blocks = [], skipped = 0;
     visibleSteps().forEach(function (st) {
       var lines = [];
-      visibleQs(st).forEach(function (q) {
-        n++;
-        if (isEmpty(A[q.id])) { skipped++; return; }
-        lines.push(n + '. ' + q.label + '\n→ ' + answerText(q));
-      });
-      if (lines.length) blocks.push('▪️ ' + st.title.toUpperCase() + '\n' + lines.join('\n'));
+      if (st.grouped) {
+        var g = {};
+        visibleQs(st).forEach(function (q) {
+          if (isEmpty(A[q.id])) { skipped++; return; }
+          if (q.type === 'single' && ['Да', 'Нет', 'Иногда', 'Нужно подумать'].indexOf(A[q.id]) !== -1) { (g[A[q.id]] = g[A[q.id]] || []).push(q.short); }
+          else lines.push(q.short + ': ' + answerText(q));
+        });
+        ['Да', 'Иногда', 'Нужно подумать', 'Нет'].forEach(function (k) { if (g[k]) lines.push(k + ' ➜ ' + g[k].join(', ')); });
+      } else {
+        visibleQs(st).forEach(function (q) {
+          if (isEmpty(A[q.id])) { skipped++; return; }
+          lines.push(q.short + ': ' + answerText(q));
+        });
+      }
+      if (lines.length) blocks.push('▪️ ' + (st.short || st.title.toUpperCase()) + '\n' + lines.join('\n'));
     });
     if (skipped) blocks.push('Без ответа: ' + skipped + ' вопр.');
+    var head = '📋 ' + SCHEMA.title + (A.name ? ' · ' + A.name : '');
+    var whole = head + '\n\n' + blocks.join('\n\n');
+    if (whole.length <= MAX_PART) return [whole];
     var parts = [], cur = '';
     blocks.forEach(function (b) {
-      while (b.length > MAX_PART) { if (cur) { parts.push(cur); cur = ''; } parts.push(b.slice(0, MAX_PART)); b = b.slice(MAX_PART); }
-      if (cur && (cur.length + b.length + 2) > MAX_PART) { parts.push(cur); cur = ''; }
+      while (b.length > MAX_PART - 120) { if (cur) { parts.push(cur); cur = ''; } parts.push(b.slice(0, MAX_PART - 120)); b = b.slice(MAX_PART - 120); }
+      if (cur && (cur.length + b.length + 2) > MAX_PART - 120) { parts.push(cur); cur = ''; }
       cur = cur ? cur + '\n\n' + b : b;
     });
     if (cur) parts.push(cur);
-    var who = A.name ? ' · ' + A.name : '';
-    return parts.map(function (p, i) {
-      return '📋 ' + SCHEMA.title + who + (parts.length > 1 ? ' (часть ' + (i + 1) + ' из ' + parts.length + ')' : '') + '\n\n' + p;
-    });
+    return parts.map(function (p, i) { return head + ' (часть ' + (i + 1) + ' из ' + parts.length + ')\n\n' + p; });
   }
   function buildText() { return buildParts().join('\n\n'); }
   function tgLink(i) {
